@@ -1,6 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using TaskManager.Model;
 using WebAPIGestaoTarefas.Context;
+using WebAPIGestaoTarefas.Model;
 
 namespace WebAPIGestaoTarefas.Controllers
 {
@@ -39,8 +39,7 @@ namespace WebAPIGestaoTarefas.Controllers
 
         [HttpPost]
         public ActionResult<Tarefa> Incluir(Tarefa tarefa)
-        {
-            tarefa.Status = "P";
+        {            
             _container.Incluir(tarefa);
             return CreatedAtAction(nameof(ObterTarefaPorId), new { id = tarefa.Id }, tarefa);
         }

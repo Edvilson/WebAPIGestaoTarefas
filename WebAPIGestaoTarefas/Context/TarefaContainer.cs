@@ -1,4 +1,4 @@
-﻿using TaskManager.Model;
+﻿using WebAPIGestaoTarefas.Model;
 
 namespace WebAPIGestaoTarefas.Context
 {
@@ -11,35 +11,36 @@ namespace WebAPIGestaoTarefas.Context
             _tarefa = new List<Tarefa>();
         }
 
-        public IEnumerable<Tarefa> ObterTodasTarefas()
+        public IEnumerable<Tarefa>? ObterTodasTarefas()
         {
             return _tarefa.Any() ? _tarefa : null;
         }
 
-        public Tarefa ObterTarefaPorId(int id) => _tarefa.FirstOrDefault(task => task.Id == id);
+        public Tarefa ObterTarefaPorId(int id) => _tarefa.FirstOrDefault(tarefa => tarefa.Id == id);
 
-        public void Incluir(Tarefa task)
+        public void Incluir(Tarefa tarefa)
         {
-            task.Id = Tarefa.NextId++;
-            _tarefa.Add(task);
+            tarefa.Id = Tarefa.NextId++;
+            tarefa.Status = "P";
+            _tarefa.Add(tarefa);
         }
 
-        public void Alterar(int id, Tarefa updatedTask)
+        public void Alterar(int id, Tarefa model)
         {
-            var existingTask = _tarefa.FirstOrDefault(task => task.Id == id);
-            if (existingTask != null)
+            var tarefaExiste = _tarefa.FirstOrDefault(tarefa => tarefa.Id == id);
+            if (tarefaExiste != null)
             {
-                existingTask.Descricao = updatedTask.Descricao;
-                existingTask.Status = "C";
+                tarefaExiste.Descricao = model.Descricao;
+                tarefaExiste.Status = "C";
             }
         }
 
         public bool Excluir(int id)
         {
-            var taskToRemove = _tarefa.FirstOrDefault(task => task.Id == id);
-            if (taskToRemove != null)
+            var tarefaExcluir = _tarefa.FirstOrDefault(tarefa => tarefa.Id == id);
+            if (tarefaExcluir != null)
             {
-                _tarefa.Remove(taskToRemove);
+                _tarefa.Remove(tarefaExcluir);
                 return true;
             }
             return false;

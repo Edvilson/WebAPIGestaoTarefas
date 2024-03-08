@@ -1,6 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
 
-namespace TaskManager.Model
+namespace WebAPIGestaoTarefas.Model
 {
     public class Tarefa
     {
